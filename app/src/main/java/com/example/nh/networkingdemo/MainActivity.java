@@ -49,16 +49,17 @@ public class MainActivity extends AppCompatActivity {
 
         final JsonParser parser = new JsonParser();
 
-        new AsyncTask<Void, Void, String>() {
+        new AsyncTask<String, Integer, String>() {
+
             @Override
             protected void onPreExecute() {
                 loader.setVisibility(View.VISIBLE);
             }
 
             @Override
-            protected String doInBackground(Void... voids) {
-                //Log.e("data",parser.getAllUsers());
-                return parser.getAllUsers();
+            protected String doInBackground(String... strings) {
+                publishProgress(1,2,3,4);
+                return parser.getAllUsers(strings[0]);
             }
 
             @Override
@@ -69,7 +70,14 @@ public class MainActivity extends AppCompatActivity {
                 ArrayAdapter<User> adapter = new ArrayAdapter<User>(MainActivity.this,android.R.layout.simple_list_item_1,allUsers);
                 allUsersList.setAdapter(adapter);
             }
-        }.execute();
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                for (int i=0;i<values.length;i++){
+                    Log.e("data",values[i]+"");
+                }
+            }
+        }.execute("https://jsonplaceholder.typicode.com/users");
 
         //parser.getAllUsers();
 

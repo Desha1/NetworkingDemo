@@ -15,10 +15,10 @@ import java.util.Scanner;
 
 public class JsonParser {
 
-    public String getAllUsers(){
+    public String getAllUsers(String urlStr){
         StringBuilder dataStringBuilder = new StringBuilder();
         try {
-            URL url = new URL("https://jsonplaceholder.typicode.com/users");
+            URL url = new URL(urlStr);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             if (connection.getResponseCode() == 200) {
                 Scanner sc = new Scanner(connection.getInputStream());
